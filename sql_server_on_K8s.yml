@@ -1,0 +1,73 @@
+# kubectl  apply -f .\sql_server_on_K8s.yml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sql-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi  # adjust the size according to your requirements
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sqlserver-service
+  labels:
+    app: sqlserver
+spec:
+  selector:
+    app: sqlserver
+  ports:
+  - protocol: TCP
+    port: 1433
+    targetPort: 1433
+    name: mssql
+  type: LoadBalancer
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sqlserver-deployment
+  labels:
+    app: sqlserver
+spec:
+  replicas: 1  # Adjust the number of replicas as needed
+  selector:
+    matchLabels:
+      app: sqlserver
+  template:
+    metadata:
+      labels:
+        app: sqlserver
+    spec:
+      containers:
+      - name: sqlserver
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        env:
+          - name: ACCEPT_EULA
+            value: "Y"
+          - name: MSSQL_SA_PASSWORD
+            value: "Test@12345"
+          - name: MSSQL_PID
+            value: "Evaluation"
+        ports:
+          - containerPort: 1433
+            name: mssql
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "1"
+          limits:
+            memory: "2Gi"
+            cpu: "2"
+        volumeMounts:
+          - name: sql-data
+            mountPath: /var/opt/mssql/data
+      volumes:
+        - name: sql-data
+          persistentVolumeClaim:
+            claimName: sql-pvc
