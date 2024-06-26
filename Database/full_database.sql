@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [restomgmt]    Script Date: 26-06-2024 19:32:21 ******/
+/****** Object:  Database [restomgmt]    Script Date: 26-06-2024 19:47:59 ******/
 CREATE DATABASE [restomgmt]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -84,7 +84,7 @@ ALTER DATABASE [restomgmt] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP
 GO
 USE [restomgmt]
 GO
-/****** Object:  Table [dbo].[user_type]    Script Date: 26-06-2024 19:32:21 ******/
+/****** Object:  Table [dbo].[user_type]    Script Date: 26-06-2024 19:47:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -98,7 +98,7 @@ CREATE TABLE [dbo].[user_type](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[users]    Script Date: 26-06-2024 19:32:21 ******/
+/****** Object:  Table [dbo].[users]    Script Date: 26-06-2024 19:47:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -161,7 +161,7 @@ INSERT [dbo].[users] ([userid], [username], [email], [passwordhash], [user_type_
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [UQ__users__AB6E616469F2A08E]    Script Date: 26-06-2024 19:32:22 ******/
+/****** Object:  Index [UQ__users__AB6E616469F2A08E]    Script Date: 26-06-2024 19:47:59 ******/
 ALTER TABLE [dbo].[users] ADD UNIQUE NONCLUSTERED 
 (
 	[email] ASC
